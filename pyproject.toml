@@ -1,0 +1,79 @@
+[project]
+name = "captchaai-mcp"
+version = "0.1.0"
+description = "Official MCP server for CaptchaAI — expose token-mode CAPTCHA solving to AI agents."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "captchaai-developers", email = "dev@captchaai.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "captchaai>=1.0.3",
+    "fastmcp>=4.1,<5",
+]
+keywords = [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "fastmcp",
+    "ai-agents",
+    "llm",
+    "captcha",
+    "captchaai",
+    "captcha-solver",
+    "captcha-solving",
+    "captcha-bypass",
+    "recaptcha",
+    "recaptcha-v2",
+    "recaptcha-v3",
+    "recaptcha-enterprise",
+    "cloudflare-turnstile",
+    "turnstile-solver",
+    "cloudflare-challenge",
+    "geetest",
+    "captchafox",
+    "friendly-captcha",
+    "lemin",
+    "automation",
+    "web-scraping",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://captchaai.com/"
+Documentation = "https://docs.captchaai.com/"
+Repository = "https://github.com/CaptchaAI/captchaai-mcp"
+Issues = "https://github.com/CaptchaAI/captchaai-mcp/issues"
+Changelog = "https://github.com/CaptchaAI/captchaai-mcp/releases"
+
+[project.scripts]
+captchaai-mcp = "captchaai_mcp.__main__:main"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.4.1.post1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
