@@ -1,6 +1,6 @@
 [project]
 name = "captchaai-mcp"
-version = "0.1.0"
+version = "1.0.0"
 description = "Official MCP server for CaptchaAI — expose token-mode CAPTCHA solving to AI agents."
 readme = "README.md"
 license = "MIT"
@@ -40,7 +40,7 @@ keywords = [
     "web-scraping",
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",

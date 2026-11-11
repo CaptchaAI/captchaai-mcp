@@ -6,6 +6,7 @@ Exposes **token-mode** (pure API, no browser required) tools so AI assistants an
 
 - **Website:** https://captchaai.com/
 - **API Documentation:** https://docs.captchaai.com/
+- **MCP Client Integration Guide:** [docs/mcp-integration.md](docs/mcp-integration.md) (Claude Code, OpenAI Codex, Cursor, Claude Desktop, VS Code, Windsurf, Antigravity)
 - **Repository:** https://github.com/CaptchaAI/captchaai-mcp
 
 ## Tools
@@ -65,7 +66,9 @@ uvx captchaai-mcp --transport streamable-http --host 127.0.0.1 --port 8000
 > [!NOTE]
 > Prefer `CAPTCHAAI_API_KEY` in the environment over `--api-key` on multi-user hosts so the key is not visible in process listings. When using `--transport streamable-http`, bind to loopback or place it behind an authenticating TLS reverse proxy.
 
-### MCP Client Configuration (Claude Desktop / Cursor / Antigravity)
+### MCP Client Configuration
+
+See the full **[MCP Client Integration Guide](docs/mcp-integration.md)** for step-by-step setup with **Claude Code**, **OpenAI Codex CLI**, **Cursor**, **Claude Desktop**, **VS Code**, **Windsurf**, and **Antigravity**.
 
 Using `uvx` (recommended):
 
