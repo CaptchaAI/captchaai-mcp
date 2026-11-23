@@ -23,8 +23,13 @@ jobs:
           python -m pip install --upgrade pip uv
           uv sync --locked
 
-      - name: Run tests
+      - name: Run tests (base)
         run: uv run pytest -q
+
+      - name: Run tests (browser extra)
+        run: |
+          uv sync --locked --extra browser
+          uv run pytest -q
 
   publish:
     needs: test

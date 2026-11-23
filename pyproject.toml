@@ -1,7 +1,7 @@
 [project]
 name = "captchaai-mcp"
-version = "1.0.0"
-description = "Official MCP server for CaptchaAI — expose token-mode CAPTCHA solving to AI agents."
+version = "1.1.0"
+description = "Official MCP server for CaptchaAI — expose token-mode and optional Playwright browser CAPTCHA solving to AI agents."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -10,7 +10,7 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "captchaai>=1.0.3",
+    "captchaai>=2.0.1",
     "fastmcp>=4.1,<5",
 ]
 keywords = [
@@ -37,6 +37,8 @@ keywords = [
     "friendly-captcha",
     "lemin",
     "automation",
+    "browser-automation",
+    "playwright",
     "web-scraping",
 ]
 classifiers = [
@@ -51,6 +53,11 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.optional-dependencies]
+browser = [
+    "captchaai[playwright]>=2.0.1",
 ]
 
 [project.urls]

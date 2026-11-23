@@ -14,7 +14,7 @@ from captchaai_mcp.server import create_server
 
 
 class TestRegistrationAndSchema:
-    async def test_server_exposes_four_tools_with_descriptions(self) -> None:
+    async def test_server_exposes_six_tools_with_descriptions(self) -> None:
         server = create_server(api_key="test-key")
         async with Client(server) as client:
             tools = await client.list_tools()
@@ -25,6 +25,8 @@ class TestRegistrationAndSchema:
             "get_balance",
             "solve_captcha",
             "get_supported_captchas",
+            "get_captchas_params",
+            "solve_url",
         }
         for tool in tools:
             assert tool.description, f"Tool {tool.name} is missing a description"
@@ -46,6 +48,10 @@ class TestRegistrationAndSchema:
             branch["enum"] for branch in proxytype_schema["anyOf"] if "enum" in branch
         )
         assert proxytype_enum == ["HTTP", "HTTPS"]
+
+        solve_url_tool = next(t for t in tools if t.name == "solve_url")
+        assert solve_url_tool.input_schema["properties"]["autofill"]["type"] == "boolean"
+        assert solve_url_tool.input_schema["properties"]["autofill"]["default"] is True
 
 
 class TestAccountAndDiscoveryTools:

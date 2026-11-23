@@ -2,7 +2,7 @@
 
 Official Model Context Protocol (MCP) server for [CaptchaAI](https://captchaai.com/), built with [FastMCP](https://gofastmcp.com/) and backed by the official [`captchaai`](https://github.com/CaptchaAI/captchaai-python) Python SDK.
 
-Exposes **token-mode** (pure API, no browser required) tools so AI assistants and automation agents can inspect account capacity, check supported CAPTCHA types, and solve challenges.
+Exposes **token-mode** (pure API, no browser required) tools by default, plus optional **browser-mode** Playwright tools (`pip install "captchaai-mcp[browser]"`) for automatic CAPTCHA detection, extraction, solving, and injection on live URLs.
 
 - **Website:** https://captchaai.com/
 - **API Documentation:** https://docs.captchaai.com/
@@ -17,6 +17,8 @@ Exposes **token-mode** (pure API, no browser required) tools so AI assistants an
 | `get_threads` | Get account thread usage (`threads`, `working_threads`, `free_threads`) | Yes |
 | `get_balance` | Get account balance string (`balance`) | Yes |
 | `solve_captcha` | Solve a CAPTCHA in token mode and return `task_id`, `solution`, and `user_agent` | Yes |
+| `get_captchas_params` *(optional `[browser]`)* | Open a URL in Playwright Chromium and extract `CaptchaParams` for every detected CAPTCHA | Yes |
+| `solve_url` *(optional `[browser]`)* | Open a URL in Playwright Chromium, detect, solve, and optionally inject (`autofill`) CAPTCHAs | Yes |
 
 ## Supported `captcha_type` Values
 
@@ -35,6 +37,10 @@ Install directly from PyPI with `pip` or run via `uvx`:
 
 ```bash
 pip install captchaai-mcp
+
+# Optional: enable browser-mode tools (get_captchas_params, solve_url)
+pip install "captchaai-mcp[browser]"
+playwright install chromium
 ```
 
 Or run from a local clone:

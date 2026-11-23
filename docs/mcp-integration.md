@@ -2,12 +2,23 @@
 
 This guide explains how to connect the **CaptchaAI MCP Server** (`captchaai-mcp`) to AI coding assistants and development tools using the Model Context Protocol (MCP).
 
-`captchaai-mcp` exposes four tools to your AI assistant:
+`captchaai-mcp` exposes six tools to your AI assistant:
 
 - `get_supported_captchas` — inspect supported challenge types and required arguments (no API key needed)
 - `get_threads` — check account thread limits and free concurrency
 - `get_balance` — check account balance
 - `solve_captcha` — solve token-mode challenges (`recaptcha_v2`, `recaptcha_v3`, `turnstile`, `cloudflare_challenge`, `geetest`, `captchafox`, `friendly_captcha`, `lemin`)
+- `get_captchas_params` *(optional `[browser]` extra)* — open a live URL in Playwright Chromium and extract `CaptchaParams` for every detected CAPTCHA
+- `solve_url` *(optional `[browser]` extra)* — open a live URL in Playwright Chromium, detect, solve, and optionally inject (`autofill=True/False`) CAPTCHAs
+
+To enable the optional browser-mode tools:
+
+```bash
+pip install "captchaai-mcp[browser]"
+playwright install chromium
+```
+
+Or with `uvx`: `uvx --from "captchaai-mcp[browser]" captchaai-mcp`.
 
 ## Prerequisites
 

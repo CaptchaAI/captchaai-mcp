@@ -105,6 +105,29 @@ def _is_missing(value: Any) -> bool:
     return value is None or (isinstance(value, str) and not value.strip())
 
 
+def validate_proxy_pair(
+    proxy: str | None,
+    proxytype: str | None,
+) -> tuple[str | None, str | None]:
+    """Validate optional proxy/proxytype pair and return normalized `(proxy, proxytype)`."""
+    has_proxy = not _is_missing(proxy)
+    has_proxytype = not _is_missing(proxytype)
+    if has_proxy and not has_proxytype:
+        raise ToolError("proxytype is required when proxy is set (HTTP or HTTPS).")
+    if has_proxytype and not has_proxy:
+        raise ToolError("proxy is required when proxytype is set (format: 'user:pass@host:port').")
+    if not has_proxy:
+        return None, None
+
+    normalized_proxytype = str(proxytype).strip().upper()
+    if normalized_proxytype not in SUPPORTED_PROXY_TYPES:
+        supported = ", ".join(SUPPORTED_PROXY_TYPES)
+        raise ToolError(
+            f"Unsupported proxytype {proxytype!r}. Supported values: {supported}."
+        )
+    return str(proxy).strip(), normalized_proxytype
+
+
 def build_call(captcha_type: str, args: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     """Validate MCP arguments and build `(sdk_method_name, sdk_kwargs)`.
 
@@ -143,20 +166,12 @@ def build_call(captcha_type: str, args: dict[str, Any]) -> tuple[str, dict[str, 
             "Call get_supported_captchas() for parameter details."
         )
 
-    has_proxy = not _is_missing(provided.get("proxy"))
-    has_proxytype = not _is_missing(provided.get("proxytype"))
-    if has_proxy and not has_proxytype:
-        raise ToolError("proxytype is required when proxy is set (HTTP or HTTPS).")
-    if has_proxytype and not has_proxy:
-        raise ToolError("proxy is required when proxytype is set (format: 'user:pass@host:port').")
-    if has_proxytype:
-        normalized_proxytype = str(provided["proxytype"]).strip().upper()
-        if normalized_proxytype not in SUPPORTED_PROXY_TYPES:
-            supported = ", ".join(SUPPORTED_PROXY_TYPES)
-            raise ToolError(
-                f"Unsupported proxytype {provided['proxytype']!r}. Supported values: {supported}."
-            )
-        provided["proxytype"] = normalized_proxytype
+    norm_proxy, norm_proxytype = validate_proxy_pair(
+        provided.get("proxy"), provided.get("proxytype")
+    )
+    if norm_proxy is not None:
+        provided["proxy"] = norm_proxy
+        provided["proxytype"] = norm_proxytype
 
     sdk_kwargs = {_ARG_TO_SDK_KWARG.get(key, key): value for key, value in provided.items()}
     return spec.sdk_method, sdk_kwargs
